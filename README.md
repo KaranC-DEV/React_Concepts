@@ -2,7 +2,7 @@
 Steps to create a React Application:-
 1) Create a folder and open the folder in cmd
 2) For install the vite template we should use the command:-
-   npm create vite@latest 
+   - npm create vite@latest 
 3) - Enter the Project name and enter the library as react 
    - Select the variant or language as javascript
    - For installing all the packages and running the development server we should select yes option along with Eslint option 
