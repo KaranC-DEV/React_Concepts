@@ -12,15 +12,15 @@ Steps to create a React Application:-
 
 # Use these commands from your project folder:
 
-git init
-git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
-git push -u origin main
+- git init
+- git add .
+- git commit -m "Initial commit"
+- git branch -M main
+- git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
+- git push -u origin main
 
 # For future updates, just use:
 
-git add .
-git commit -m "Updated code"
-git push
+- git add .
+- git commit -m "Updated code"
+- git push
