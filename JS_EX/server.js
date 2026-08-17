@@ -1,3 +1,5 @@
+// Program which helps to analyse the for each loop with api fetch
+
 // debugger;
 // let data1 = fetch("https://fakestoreapi.com/products")
 // data1.then((res)=>{
