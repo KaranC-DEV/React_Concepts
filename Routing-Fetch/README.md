@@ -1,177 +1,214 @@
- 1) npm install react-router-dom
+````markdown
+# React Routing & API Fetching
 
- React Routing + API — Short Notes
-1. BrowserRouter
+This project demonstrates the basics of React Routing, Nested Routing, Dynamic Routes, React Hooks, and API fetching using Axios.
 
-Used to enable routing in a React application.
+## Concepts Learned
 
+### 1. BrowserRouter
+`BrowserRouter` is used to enable routing in a React application.
+
+```jsx
 <BrowserRouter>
-  ...
+  <Routes>
+    {/* Routes */}
+  </Routes>
 </BrowserRouter>
-2. Routes and Route
+````
 
-Routes contains all routes, while Route defines which component should display for a URL.
+### 2. Routes & Route
 
-<Routes>
-  <Route path="/products" element={<Products />} />
-</Routes>
-3. Nested Routing
+`Routes` contains multiple `Route` components. Each `Route` maps a URL path to a React component.
 
-A route can contain another route.
+```jsx
+<Route path="/products" element={<Products />} />
+```
 
+### 3. Nested Routing
+
+A route can contain child routes.
+
+```jsx
 <Route path="/user" element={<User />}>
   <Route path=":userId" element={<Todos />} />
 </Route>
+```
 
-This creates:
+Example URLs:
 
-/user
+```text
 /user/1
 /user/2
-4. Outlet
-
-Outlet displays the child route inside the parent component.
-
-<Outlet />
-
-For example:
-
-User
-  ↓
-Outlet
-  ↓
-Todos
-5. Dynamic Routing
-
-:userId represents a dynamic value in the URL.
-
-<Route path=":userId" element={<Todos />} />
-
-Example:
-
 /user/10
-/user/20
-6. useParams()
+```
 
-Used to get dynamic values from the URL.
+### 4. Outlet
 
-const { userId } = useParams()
+`Outlet` is used in the parent component to render its child route.
 
-For /user/10:
-
-userId = 10
-7. useNavigate()
-
-Used to navigate from one route to another using JavaScript.
-
-const navigate = useNavigate()
-
-
-navigate("/products")
-
-Can also go back:
-
-navigate(-1)
-8. useState()
-
-Used to store and update component data.
-
-const [todo, setTodo] = useState(null)
-todo → current value
-setTodo() → updates value
-null → initial value
-9. useEffect()
-
-Used for side effects such as API calls.
-
-useEffect(() => {
-   // API call
-}, [userId])
-
-The effect runs when userId changes.
-
-10. Axios
-
-Used to make HTTP/API requests.
-
-axios.get(url)
+```jsx
+<Outlet />
+```
 
 Example:
 
-axios.get("https://jsonplaceholder.typicode.com/todos/1")
-11. API Response
+```text
+User
+ └── Outlet
+      └── Todos
+```
 
-The API response can be stored in state.
+### 5. Dynamic Routing
 
-.then(({ data }) => {
-    setTodo(data)
-})
+Dynamic routes use `:` to represent a variable part of the URL.
 
-data contains the actual response from the API.
+```jsx
+<Route path=":userId" element={<Todos />} />
+```
 
-12. Conditional Rendering
+For `/user/101`, `101` is the dynamic `userId`.
 
-Used to display data only when it is available.
+### 6. useParams()
 
+`useParams()` is used to retrieve dynamic parameters from the URL.
+
+```jsx
+const { userId } = useParams();
+```
+
+For `/user/101`:
+
+```text
+userId = 101
+```
+
+### 7. useNavigate()
+
+`useNavigate()` is used to navigate between routes programmatically.
+
+```jsx
+const navigate = useNavigate();
+
+navigate("/products");
+```
+
+It can also be used to go back:
+
+```jsx
+navigate(-1);
+```
+
+### 8. useState()
+
+`useState()` is used to store and update component data.
+
+```jsx
+const [todo, setTodo] = useState(null);
+```
+
+* `todo` → stores the current data
+* `setTodo()` → updates the data
+* `null` → initial value
+
+### 9. useEffect()
+
+`useEffect()` is used for side effects such as API calls.
+
+```jsx
+useEffect(() => {
+  // API call
+}, [userId]);
+```
+
+The effect runs when the `userId` value changes.
+
+### 10. Axios
+
+Axios is used to make HTTP requests to an API.
+
+```jsx
+axios.get("https://jsonplaceholder.typicode.com/todos/1");
+```
+
+The response can be handled using `.then()` and `.catch()`:
+
+```jsx
+axios.get(url)
+  .then(({ data }) => {
+    setTodo(data);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+```
+
+### 11. Conditional Rendering
+
+Conditional rendering is used to display API data only when it is available.
+
+```jsx
 {todo != null && (
-    <h1>{todo.title}</h1>
+  <h1>{todo.title}</h1>
 )}
+```
 
-This prevents trying to access properties before the API data arrives.
+### 12. Dynamic API Requests
 
-13. Dynamic API Request
+Dynamic routing can be combined with API requests.
 
-You combined routing with an API call:
-
-const { userId } = useParams()
-
+```jsx
+const { userId } = useParams();
 
 axios.get(
   "https://jsonplaceholder.typicode.com/todos/" + userId
-)
+);
+```
 
-So:
+Example:
 
-/user/1 → API → /todos/1
-/user/2 → API → /todos/2
-14. Error Handling
+```text
+/user/1  →  /todos/1
+/user/2  →  /todos/2
+/user/10 →  /todos/10
+```
 
-catch() handles API errors.
+### 13. API Error Handling
 
+`catch()` is used to handle errors during API requests.
+
+```jsx
 .catch((error) => {
-    console.log(error)
-})
-15. Important Error Learned
+  console.log(error);
+});
+```
 
-You encountered:
+## Project Flow
 
-todo is not defined
+```text
+User visits /user/1
+        ↓
+React Router matches the route
+        ↓
+useParams() gets userId = 1
+        ↓
+Axios sends API request
+        ↓
+API returns Todo data
+        ↓
+useState() stores the data
+        ↓
+React displays the data
+```
 
-because JavaScript is case-sensitive.
+## Technologies Used
 
-❌
+* React.js
+* React Router DOM
+* Axios
+* JavaScript
+* Vite
+* JSONPlaceholder API
 
-const [Todos, setTodo] = useState(null)
-console.log(todo)
+## Key Learning
 
-✅
-
-const [todo, setTodo] = useState(null)
-console.log(todo)
-Overall Concept
-
-You learned how to build a React application where:
-
-URL
- ↓
-React Router
- ↓
-Dynamic Parameter
- ↓
-useParams()
- ↓
-Axios API Request
- ↓
-useState()
- ↓
-Display Data
+Through this project, I learned how to create multiple routes, nested routes, and dynamic routes, navigate between pages, retrieve URL parameters, fetch API data using Axios, manage API data using React Hooks, and conditionally render fetched data.
